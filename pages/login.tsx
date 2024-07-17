@@ -27,6 +27,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex bg-slate-900 h-screen w-screen justify-center items-center border-pink-100">
+      
       <form method="POST" className={clsx("w-[300px] flex flex-col space-y-2", SAbsoluteCenter)} onSubmit={submitLogin}>
         <input
           type="text"
