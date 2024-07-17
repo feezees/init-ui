@@ -8,7 +8,13 @@ export let defalutLinks = [
     },
 ] as IDBRouteDto[];
 
-export const getRoutes = (role: 'admin' | 'moder' | 'driver') => {
+export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
+    if (role === 'tg') {
+        return [
+            ...defalutLinks,
+        ]
+    }
+
     if (role === 'admin') {
         return [
             ...defalutLinks,

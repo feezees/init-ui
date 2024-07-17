@@ -18,9 +18,6 @@ const client = new Discord.Client({
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log('init');
 
-    // const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"]});
-
-
     const m = {
         "content": "This is a message with components",
         "components": [
@@ -38,8 +35,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             }
         ]
     }
-
-    console.log('m');
 
     client.on("messageCreate", (message: { content: string; channel: { send: (arg: any) => void; }; }) => {
         console.log('###################', message);

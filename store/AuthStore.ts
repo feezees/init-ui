@@ -1,16 +1,19 @@
 import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { DOMEN } from "../settings";
+import { IDBRouteDto } from "../types/dto";
 type TCurrent = HTMLInputElement | null;
 
 export class AuthStore {
   RootStore: any;
+  user: any;
   constructor(root: any) {
     makeAutoObservable(this), (this.RootStore = root);
   }
 
   isAuth = false;
   loading = true;
+  links = [] as IDBRouteDto[];
 
   setLoading(value: boolean) {
     this.loading = value;
@@ -18,6 +21,25 @@ export class AuthStore {
 
   setAuth(value: boolean) {
     this.isAuth = value;
+  }
+
+  async authByTg({ user, id }: { user: string; id: string }) {
+    axios.post(`${DOMEN}/api/loginByTg`, { user, id })
+      .then((res) => {
+        if (res.status !== 200) {
+          this.loading = false;
+          this.isAuth = false;
+        } else {
+          this.loading = false;
+          this.isAuth = true;
+
+          this.RootStore.user.links = res.data.links;
+        }
+      })
+      .catch((err) => {
+        this.loading = false;
+        this.isAuth = false;
+      });
   }
 
   async tryAuthByToken() {
