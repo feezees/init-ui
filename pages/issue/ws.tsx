@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import Header from '../../components/Header';
 
 let socket;
 
@@ -28,6 +29,7 @@ const Chat = () => {
 
     return (
         <div className='flex flex-col gap-4 p-4'>
+            <Header />
             <p className='text-white'>counter: <span className='text-green-900'>{counter}</span></p>
             <button type="button" className={sButton} onClick={increment}>inc</button>
         </div >

@@ -17,6 +17,11 @@ export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
                 href: '/issue/ws',
                 heading: '/issue/ws',
                 description: ''
+            },
+            {
+                href: '/loveka',
+                heading: '/loveka',
+                description: ''
             }
         ]
     }
