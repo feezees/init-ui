@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: any }> = observer(({ children })
         {RootStore.auth.loading && <Loader />}
 
         {!RootStore.auth.loading && RootStore.auth.isAuth &&
-          <div className="relative flex flex-col h-full">
+          <div className="relative flex flex-col h-full p-4">
             <Header />
             <div className="border-red-500 h-full">{children}</div>
           </div>

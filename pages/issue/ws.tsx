@@ -4,6 +4,8 @@ import io from 'socket.io-client';
 
 let socket;
 
+const sButton = "px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800";
+
 const Chat = () => {
     const [counter, setCounter] = useState<number>(0);
 
@@ -25,10 +27,10 @@ const Chat = () => {
     };
 
     return (
-        <div>
-            <div>counter: {counter}</div>
-            <button onClick={increment}>inc</button>
-        </div>
+        <div className='flex flex-col gap-4 p-4'>
+            <p className='text-white'>counter: <span className='text-green-900'>{counter}</span></p>
+            <button type="button" className={sButton} onClick={increment}>inc</button>
+        </div >
     );
 };
 

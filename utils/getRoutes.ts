@@ -1,3 +1,4 @@
+import { heading } from "discord.js";
 import { IDBRouteDto } from "../types/dto";
 
 export let defalutLinks = [
@@ -12,6 +13,11 @@ export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
     if (role === 'tg') {
         return [
             ...defalutLinks,
+            {
+                href: '/issue/ws',
+                heading: '/issue/ws',
+                description: ''
+            }
         ]
     }
 

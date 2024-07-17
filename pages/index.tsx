@@ -1,18 +1,31 @@
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { RootStore } from "../store/RootStore";
+import { useEffect, useState } from "react";
 
 export const sButton = `py-2 px-4 border-2 border-zinc-800 bg-twitchpink hover:bg-twitchdarkpink rounded-md`;
 export const sLink = 'font-medium text-blue-600 dark:text-blue-500 hover:underline';
 export const sList = "mb-2 text-lg font-semibold text-gray-900 dark:text-white";
 export const sUl = "max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400";
 
-const Index = () => {
+export async function getStaticProps() {
+  return {
+    props: {
+      env: {
+        host: process.env.DB_HOST,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+      }
+    }
+  }
+};
+
+const Index = ({ env }: { env: Record<string, string> }) => {
   const links = RootStore.user.links;
 
   return (
     <>
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col">
 
         <h2 className={sList}>links</h2>
         <ul className={sUl}>
