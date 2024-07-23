@@ -6,7 +6,7 @@ import { Carousel, CustomFlowbiteTheme, FlowbiteCarouselTheme, Tabs } from "flow
 import Link from "next/link";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-
+    
 // images taked from https://www.freepik.com/
 
 const sImage = 'w-max h-full border-2 rounded-xl border-twitchdarkpink hover:border-twitchpink';

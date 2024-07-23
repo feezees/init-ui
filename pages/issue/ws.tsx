@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import Header from '../../components/Header';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 
-let socket;
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 
 const sButton = "px-6 py-3.5 text-base font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800";
 

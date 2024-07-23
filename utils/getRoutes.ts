@@ -22,6 +22,11 @@ export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
                 href: '/loveka',
                 heading: '/loveka',
                 description: ''
+            },
+            {
+                href: '/magicbutton',
+                heading: '/magicbutton',
+                description: '' 
             }
         ]
     }

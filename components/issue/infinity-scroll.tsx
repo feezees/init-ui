@@ -13,7 +13,7 @@ export const prefix = 'https://image.lexica.art/'
 export const [full, small] = [prefix + 'full_webp/', prefix + 'sm2_webp/']
 const pageSize = 4;
 
-const getObserver = (onIntersection: void) => new IntersectionObserver(onIntersection, {
+const getObserver = (onIntersection: IntersectionObserverCallback) => new IntersectionObserver(onIntersection, {
     root: null,   // default is the viewport
     threshold: 1 // percentage of target's visible area. Triggers "onIntersection"
 })
@@ -66,7 +66,7 @@ const Index = () => {
         }, [])
     }
 
-    const handleScrollToTop = () => dividerBefore?.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    const handleScrollToTop = () => (dividerBefore?.current as unknown as HTMLElement).scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 
     return (
         <div className=" bg-[#0E0E0E] h-screen px-4 w-full  text-white">

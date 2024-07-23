@@ -61,8 +61,8 @@ const Index = observer(() => {
                 className={clsx("p-2", `${draggbleId === el.id && 'bg-red-900'}`)}
                 onDragStart={(e) => handleOnDragStart(el)}
                 onDragEnd={handleDragEnd}
-                onDragOver={(e) => handleOnDragOver(e, el)}
-                onDrop={(e) => handleOnDrop(e, el)}
+                onDragOver={(e) => handleOnDragOver(e as unknown as Event, el)}
+                onDrop={(e) => handleOnDrop(e as unknown as Event, el)}
             >
                 {showNewPlace(el.id) && <p className={sNewPlace}> {draggbleItem?.title} </p>}
                 <p className={sUnderDrag(el.id)}> {el.title} </p>
@@ -71,7 +71,7 @@ const Index = observer(() => {
             {draggbleItem?.id !== el.id &&
                 <button >
                     <TrashIcon className="h-6 w-6 absolute  right-6 bottom-[52px]"
-                        onClick={(e) => handleRemove(e, el.id)}
+                        onClick={(e) => handleRemove(e as unknown as Event, el.id)}
                     />
                 </button>
             }
