@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { RootStore } from "../store/RootStore";
+import { Loader } from "../components/Loader";
 
 const textStyle = "text-slate-500 hover:text-slate-100";
 const outlineStyle = "outline-none hover:outline-none hover:outline-4 active:outline-none";
@@ -28,24 +29,31 @@ export default function LoginPage() {
     const inputPasswordIcon = useMemo(() => (showPassword ? "😯" : "😪"), [showPassword]);
     const inputPasswordPlaceholder = useMemo(() => (showPassword ? "" : "password"), [showPassword]);
 
-    const tgData = tg && tg?.initDataUnsafe?.user?.username && tg?.initDataUnsafe?.query_id ? {
-        user: tg?.initDataUnsafe?.user?.username,
-        query_id: tg?.initDataUnsafe?.query_id,
+    const tgData = tg && tg?.initDataUnsafe?.user?.username && tg.initDataUnsafe.user?.id ? {
+        username: tg?.initDataUnsafe?.user?.username,
+        id: tg.initDataUnsafe.user?.id,
     } : {
-        user: undefined,
-        query_id: undefined,
+        username: undefined,
+        id: undefined,
     };
 
-    if (tgData.user && tgData.query_id) {
-        RootStore.auth.authByTg({ user: tgData.user, id: tgData.query_id });
-    }
+    useEffect(() => {
+        if (tgData?.username && tgData?.id) {
+            RootStore.auth.authByTg(tgData);
+        }
+    }, [tgData])
 
     return (
         <div className="flex bg-slate-900 h-screen w-screen justify-center items-center border-pink-100">
 
-            <div className="border-2 fixed top-0 right-0 w-[300px] h-[150px]">
-                {JSON.stringify(tgData)}
-            </div>
+            {RootStore.auth.loading && <Loader />}
+
+            {/* {tgData?.username && tgData?.id && <div className="flex flex-col gap-2 text-white z-50 bg-black">
+                <p>username</p>
+                <div>{tgData.username}</div>
+                <p>id</p>
+                <div>{tgData.id}</div>
+            </div>} */}
 
             <form method="POST" className={clsx("w-[300px] flex flex-col space-y-2", SAbsoluteCenter)} onSubmit={submitLogin}>
                 <input

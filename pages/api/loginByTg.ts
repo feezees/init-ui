@@ -4,7 +4,10 @@ import { getRoutes } from "../../utils/getRoutes";
 import { parsedFile } from "../../utils/file";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.body?.user) {
+    if (req.body?.username && req.body?.id) {
+        const users = parsedFile("./db/tgusers.json");
+        console.log('#users', users, req.body);
+
         res.send({
             links: getRoutes('tg')
         });

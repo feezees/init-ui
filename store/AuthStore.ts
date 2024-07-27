@@ -23,8 +23,9 @@ export class AuthStore {
     this.isAuth = value;
   }
 
-  async authByTg({ user, id }: { user: string; id: string }) {
-    axios.post(`${DOMEN}/api/loginByTg`, { user, id })
+  async authByTg({ username, id }: { username: string; id: number }) {
+
+    axios.post(`${DOMEN}/api/loginByTg`, { username, id })
       .then((res) => {
         if (res.status !== 200) {
           this.loading = false;
