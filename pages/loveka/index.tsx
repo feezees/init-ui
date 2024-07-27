@@ -17,7 +17,7 @@ const CategoryHeading = ({ text }: { text: string }) => <div className="absolute
     <p className="text-5xl text-white pl-4 pt-1 pb-2">{text}</p>
 </div>
 
-const Image = ({ src }: { src: string }) => {
+export const Image = ({ src }: { src: string }) => {
     const [value, setValue] = useState<any>();
     const categoryTitle = src.split('.')[0];
 

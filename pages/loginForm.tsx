@@ -2,15 +2,14 @@ import clsx from "clsx";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { RootStore } from "../store/RootStore";
 import { Loader } from "../components/Loader";
+import { tgUserFromTg } from "../service/tgUserFromTg";
+import { useGetTgUser } from "../hooks/useGetTgUser";
 
 const textStyle = "text-slate-500 hover:text-slate-100";
 const outlineStyle = "outline-none hover:outline-none hover:outline-4 active:outline-none";
 const borderStyle = "border-2 border-slate-500 hover:border-slate-300 active:border-slate-100";
 const customStyle = `duration-200 bg-twitchpink hover:bg-twitchdarkpink rounded-md text-twitchgrey`;
 const SAbsoluteCenter = "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2";
-
-// @ts-ignore -- it's async
-const tg = window?.Telegram?.WebApp;
 
 export default function LoginPage() {
     const loginRef = useRef<HTMLInputElement>(null);
@@ -29,13 +28,7 @@ export default function LoginPage() {
     const inputPasswordIcon = useMemo(() => (showPassword ? "😯" : "😪"), [showPassword]);
     const inputPasswordPlaceholder = useMemo(() => (showPassword ? "" : "password"), [showPassword]);
 
-    const tgData = tg && tg?.initDataUnsafe?.user?.username && tg.initDataUnsafe.user?.id ? {
-        username: tg?.initDataUnsafe?.user?.username,
-        id: tg.initDataUnsafe.user?.id,
-    } : {
-        username: undefined,
-        id: undefined,
-    };
+    const tgData = useGetTgUser();
 
     useEffect(() => {
         if (tgData?.username && tgData?.id) {

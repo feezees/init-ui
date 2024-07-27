@@ -27,6 +27,16 @@ export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
                 href: '/magicbutton',
                 heading: '/magicbutton',
                 description: '' 
+            },
+            {
+                href: '/increment',
+                heading: 'increment',
+                description: '',
+            },
+            {
+                href: '/increment/top',
+                heading: 'increment top',
+                description: '',
             }
         ]
     }

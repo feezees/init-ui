@@ -28,6 +28,7 @@ export class AuthStore {
     axios.post(`${DOMEN}/api/loginByTg`, { username, id })
       .then((res) => {
         if (res.status !== 200) {
+          this.RootStore.user.tgUser = { username, id };
           this.loading = false;
           this.isAuth = false;
         } else {
