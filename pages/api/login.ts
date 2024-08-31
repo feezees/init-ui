@@ -1,11 +1,11 @@
 import { faker } from "@faker-js/faker";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IDbUserDto } from "../../types/dto";
+import { files } from "../../utils/file";
 import { getRoutes } from "../../utils/getRoutes";
-import { parsedFile, saveFile } from "../../utils/file";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const users = parsedFile("./db/users.json") as IDbUserDto[];
+  const users = files.parsedFile("./db/users.json") as IDbUserDto[];
   const userWithLogin = users.find((user) => user.login === req.body.login);
 
   if (!userWithLogin) {
@@ -22,11 +22,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const refreshToken = faker.datatype.uuid();
   const sessionToken = faker.datatype.uuid();
 
-  const tokens = parsedFile("./db/tokens.json");
+  const tokens = files.parsedFile("./db/tokens.json");
   tokens.push({ id: userWithLogin.id, refreshToken, sessionToken });
   const stringToSave = JSON.stringify(tokens);
-  saveFile("./db/tokens.json", stringToSave);
-
+  files.saveFile("./db/tokens.json", stringToSave);
+  
   res.setHeader("Set-Cookie", `sessionToken=${sessionToken}; refreshToken=${refreshToken}`);
 
   res.send({

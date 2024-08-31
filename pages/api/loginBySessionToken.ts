@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IDbTokenDto, IDbUserDto } from "../../types/dto";
+import { files } from "../../utils/file";
 import { getRoutes } from "../../utils/getRoutes";
-import { parsedFile } from "../../utils/file";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const sessionToken = req.cookies.sessionToken;
@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(401);
   }
 
-  const tokens = parsedFile("./db/tokens.json");
+  const tokens = files.parsedFile("./db/tokens.json");
 
   const sessionTokenValid = tokens.find((t: IDbTokenDto) => t.sessionToken === sessionToken);
 
@@ -19,7 +19,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  const users = parsedFile("./db/users.json");
+  const users = files.parsedFile("./db/users.json");
   const user = users.find((u: IDbUserDto) => u.id === sessionTokenValid.id);
 
   res.send({

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { imageBuffer } from "../../utils/file";
+import { files } from "../../utils/file";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const id = 'btc.png'; // TODO id = req.query.coin as string ?? 'btc.png'
@@ -11,7 +11,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         res.send({
             status: 0,
-            payload: imageBuffer(coinsPathPrefix + id),
+            payload: files.imageBuffer(coinsPathPrefix + id),
         });
     } catch (e) {
         res.send({

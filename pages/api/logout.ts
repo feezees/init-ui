@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IDbTokenDto } from "../../types/dto";
-import { parsedFile, saveFile } from "../../utils/file";
-const users = parsedFile("./db/users.json");
+import { files } from "../../utils/file";
+
+const users = files.parsedFile("./db/users.json");
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const tokens = parsedFile("./db/tokens.json");
+  const tokens = files.parsedFile("./db/tokens.json");
   console.log("tokens", tokens);
 
   const sessionToken = req.cookies.sessionToken;
@@ -25,7 +26,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Set-Cookie", String(`sessionToken=undefined; Max-Age=0`));
 
   const stringToSave = JSON.stringify(newTokens);
-  saveFile("./db/tokens.json", stringToSave);
+  files.saveFile("./db/tokens.json", stringToSave);
 
   res.status(200).send({});
 }
