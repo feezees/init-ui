@@ -8,6 +8,7 @@ const Index = () => {
     <div className="flex flex-col">
       <Link href='/projects/slot'> slot </Link>
       <Link href='/projects/self-control'> self-control </Link>
+      <Link href='/issue/movedFromLeft'> movedFromLeft </Link>
       _
       <Link href='/ui/scroll-slide'> scroll-slide </Link>
       <Link href='/ui/trading-dashboard-ui'> trading-dashboard-ui </Link>
