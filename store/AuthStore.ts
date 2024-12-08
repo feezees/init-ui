@@ -25,7 +25,7 @@ export class AuthStore {
 
   async authByTg({ username, id }: { username: string; id: number }) {
 
-    axios.post(`${DOMEN}/api/loginByTg`, { username, id })
+    axios.post(`${DOMEN}/api/login`, { authType: 'tg', username, id })
       .then((res) => {
         if (res.status !== 200) {
           this.RootStore.user.tgUser = { username, id };
@@ -66,7 +66,6 @@ export class AuthStore {
 
   async submitLogin(login: string | undefined, password: string | undefined) {
     if (!login || !password) return;
-    const PORT = this.RootStore.dev ? `3000` : `3001`;
 
     axios
       .post(`${DOMEN}/api/login`, {
@@ -89,7 +88,7 @@ export class AuthStore {
 
   async logout() {
     axios
-      .post(`${DOMEN}/api/login`)
+      .delete(`${DOMEN}/api/login`)
       .catch((err) => console.log(err))
       .then((res) => {
         this.loading = false;

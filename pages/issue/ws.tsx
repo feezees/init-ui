@@ -1,8 +1,8 @@
+import { DefaultEventsMap } from '@socket.io/component-emitter';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 import Header from '../../components/Header';
-import { DefaultEventsMap } from '@socket.io/component-emitter';
 
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 

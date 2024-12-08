@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // set cached
         const response = await axios.get(`https://lexica.art/api/v1/search?q=${query}`);
         cached[query] = response.data.images;
-        saveFile('./db/loveka/getCategories.json', JSON.stringify(cached))
+        saveFile('./db/loveka/getCategories.json', cached)
         res.send(cached[query]);
         return;
     }

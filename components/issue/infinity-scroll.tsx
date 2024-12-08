@@ -38,7 +38,6 @@ const Index = () => {
 
     useEffect(() => {
         let array = [...list, ...users.slice(list.length, list.length + pageSize)]
-        console.log('@', list);
 
         if (page > 0) {
             setList(array)

@@ -1,7 +1,4 @@
-const config = {
-    "BOT_TOKEN": ""
-}
-
+import { discord } from "../../settings";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const Discord = require("discord.js");
@@ -16,8 +13,6 @@ const client = new Discord.Client({
 })
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    console.log('init');
-
     const m = {
         "content": "This is a message with components",
         "components": [
@@ -37,14 +32,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     client.on("messageCreate", (message: { content: string; channel: { send: (arg: any) => void; }; }) => {
-        console.log('###################', message);
-
         if (message.content.startsWith("ping")) {
             message.channel.send(m);
         }
     });
+
+    client.on('')
     
-    client.login(config.BOT_TOKEN);
+    client.login(discord);
 
     res.send('pong');
 }   

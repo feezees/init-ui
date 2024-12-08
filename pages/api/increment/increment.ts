@@ -23,7 +23,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if (queryCounter === 5) {
-        saveFile('./db/counters.json', JSON.stringify(counters));
+        saveFile('./db/counters.json', counters);
         queryCounter = 0;
     }
 

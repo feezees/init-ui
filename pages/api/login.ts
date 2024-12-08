@@ -8,6 +8,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const method = req.method;
 
   if (method === "POST") {
+    const authType = req.body.authType;
+
+    if (authType !== "tg") {
+      if (req.body?.username && req.body?.id) {
+        const users = parsedFile("./db/tgusers.json");
+        console.log('#users', users, req.body);
+
+        res.send({
+          links: getRoutes('tg')
+        });
+        return;
+      }
+
+      res.status(500).json({ message: 'error' });
+      return;
+    }
+
     const users = parsedFile("./db/users.json") as IDbUserDto[];
     const userWithLogin = users.find((user) => user.login === req.body.login);
 
@@ -27,8 +44,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const tokens = parsedFile("./db/tokens.json");
     tokens.push({ id: userWithLogin.id, refreshToken, sessionToken });
-    const stringToSave = JSON.stringify(tokens);
-    saveFile("./db/tokens.json", stringToSave);
+    saveFile("./db/tokens.json", tokens);
 
     res.setHeader("Set-Cookie", `sessionToken=${sessionToken}; refreshToken=${refreshToken}`);
 
@@ -42,7 +58,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (method === 'PUT') {
     const sessionToken = req.cookies.sessionToken;
-    console.log(sessionToken);
 
     if (!sessionToken) {
       res.status(401);
@@ -82,9 +97,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const newTokens = tokens.filter((el: IDbTokenDto) => el.id !== idToLogout);
     res.setHeader("Set-Cookie", String(`sessionToken=undefined; Max-Age=0`));
-
-    const stringToSave = JSON.stringify(newTokens);
-    saveFile("./db/tokens.json", stringToSave);
+    saveFile("./db/tokens.json", newTokens);
 
     res.status(200).send({});
   }

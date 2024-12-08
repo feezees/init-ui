@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { sLink } from "../../pages";
 import Header from "../Header";
 
-
 const Index = observer(() => {
     useEffect(() => {
         axios.get('/api/issue/files').catch((err) => console.log(err)).then(res => console.log(res))
