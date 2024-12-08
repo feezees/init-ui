@@ -24,25 +24,6 @@ const Index = ({ env }: { env: Record<string, string> }) => {
   const links = RootStore.user.links;
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col">
-      <Link href='/projects/slot'> slot </Link>
-      <Link href='/projects/self-control'> self-control </Link>
-      <Link href='/issue/movedFromLeft'> movedFromLeft </Link>
-      _
-      <Link href='/ui/scroll-slide'> scroll-slide </Link>
-      <Link href='/ui/trading-dashboard-ui'> trading-dashboard-ui </Link>
-      _
-      <Link href='/issue/dnd'> dnd </Link>
-      <Link href='/issue/ws'> ws </Link>
-      <Link href='/issue/infinity-scroll'> infinity-scroll </Link>
-      <Link href='/issue/pagination'> pagination </Link>
-      <Link href='/issue/triple-dropbox'> triple-dropbox </Link>
-      _
-      <Link href='/404'> 404 </Link>
-      <Link href='/login'> login </Link>
-    </div>
-=======
     <>
       <div className="flex flex-col">
 
@@ -74,7 +55,6 @@ const Index = ({ env }: { env: Record<string, string> }) => {
       <script async src="https://telegram.org/js/telegram-web-app.js"></script>
     </>
 
->>>>>>> tg-master
   );
 };
 

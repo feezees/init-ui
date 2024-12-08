@@ -9,8 +9,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (method === "POST") {
     const authType = req.body.authType;
-
-    if (authType !== "tg") {
+    console.log('#52 ', authType)
+    if (authType === "tg") {
       if (req.body?.username && req.body?.id) {
         const users = parsedFile("./db/tgusers.json");
         console.log('#users', users, req.body);
