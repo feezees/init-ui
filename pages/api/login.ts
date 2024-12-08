@@ -1,38 +1,92 @@
 import { faker } from "@faker-js/faker";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { IDbUserDto } from "../../types/dto";
+import { IDbTokenDto, IDbUserDto } from "../../types/dto";
 import { getRoutes } from "../../utils/getRoutes";
 import { parsedFile, saveFile } from "../../utils/file";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const users = parsedFile("./db/users.json") as IDbUserDto[];
-  const userWithLogin = users.find((user) => user.login === req.body.login);
+  const method = req.method;
 
-  if (!userWithLogin) {
-    res.send("user not found");
-    return;
+  if (method === "POST") {
+    const users = parsedFile("./db/users.json") as IDbUserDto[];
+    const userWithLogin = users.find((user) => user.login === req.body.login);
+
+    if (!userWithLogin) {
+      res.send("user not found");
+      return;
+    }
+
+    const correctPass = userWithLogin.password === req.body.password;
+    if (!correctPass) {
+      res.send("wrong password");
+      return;
+    }
+
+    const refreshToken = faker.datatype.uuid();
+    const sessionToken = faker.datatype.uuid();
+
+    const tokens = parsedFile("./db/tokens.json");
+    tokens.push({ id: userWithLogin.id, refreshToken, sessionToken });
+    const stringToSave = JSON.stringify(tokens);
+    saveFile("./db/tokens.json", stringToSave);
+
+    res.setHeader("Set-Cookie", `sessionToken=${sessionToken}; refreshToken=${refreshToken}`);
+
+    res.send({
+      status: 200,
+      refreshToken,
+      sessionToken,
+      links: getRoutes(userWithLogin.role)
+    });
   }
 
-  const correctPass = userWithLogin.password === req.body.password;
-  if (!correctPass) {
-    res.send("wrong password");
-    return;
+  if (method === 'PUT') {
+    const sessionToken = req.cookies.sessionToken;
+    console.log(sessionToken);
+
+    if (!sessionToken) {
+      res.status(401);
+    }
+
+    const tokens = parsedFile("./db/tokens.json");
+
+    const sessionTokenValid = tokens.find((t: IDbTokenDto) => t.sessionToken === sessionToken);
+
+    if (!sessionTokenValid) {
+      res.send("wrong token");
+      return;
+    }
+
+    const users = parsedFile("./db/users.json");
+    const user = users.find((u: IDbUserDto) => u.id === sessionTokenValid.id);
+
+    res.send({
+      links: getRoutes(user.role)
+    });
   }
 
-  const refreshToken = faker.datatype.uuid();
-  const sessionToken = faker.datatype.uuid();
+  if (method === 'DELETE') {
+    const tokens = parsedFile("./db/tokens.json");
+    const sessionToken = req.cookies.sessionToken;
 
-  const tokens = parsedFile("./db/tokens.json");
-  tokens.push({ id: userWithLogin.id, refreshToken, sessionToken });
-  const stringToSave = JSON.stringify(tokens);
-  saveFile("./db/tokens.json", stringToSave);
+    const TokenToLogout = tokens.find((el: IDbTokenDto) => el.sessionToken === sessionToken);
+    if (TokenToLogout) {
+      res.status(401);
+    }
 
-  res.setHeader("Set-Cookie", `sessionToken=${sessionToken}; refreshToken=${refreshToken}`);
+    const idToLogout = TokenToLogout ? TokenToLogout.id : undefined;
 
-  res.send({
-    status: 200,
-    refreshToken,
-    sessionToken,
-    links: getRoutes(userWithLogin.role)
-  });
+    if (!idToLogout) {
+      res.status(401);
+    }
+
+    const newTokens = tokens.filter((el: IDbTokenDto) => el.id !== idToLogout);
+    res.setHeader("Set-Cookie", String(`sessionToken=undefined; Max-Age=0`));
+
+    const stringToSave = JSON.stringify(newTokens);
+    saveFile("./db/tokens.json", stringToSave);
+
+    res.status(200).send({});
+  }
+
 }

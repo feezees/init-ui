@@ -1,11 +1,9 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Carousel, CustomFlowbiteTheme, FlowbiteCarouselTheme, Spinner, Tabs } from "flowbite-react";
+import { Carousel, Spinner } from "flowbite-react";
 import Link from "next/link";
-import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Item, PlaceCategoriesResponse } from "../../types/loveka";
 
 // images taked from https://www.freepik.com/

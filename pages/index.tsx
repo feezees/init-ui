@@ -8,17 +8,17 @@ export const sLink = 'font-medium text-blue-600 dark:text-blue-500 hover:underli
 export const sList = "mb-2 text-lg font-semibold text-gray-900 dark:text-white";
 export const sUl = "max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400";
 
-export async function getStaticProps() {
-  return {
-    props: {
-      env: {
-        host: process.env.DB_HOST,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-      }
-    }
-  }
-};
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       env: {
+//         host: process.env.DB_HOST,
+//         username: process.env.DB_USER,
+//         password: process.env.DB_PASS,
+//       }
+//     }
+//   }
+// };
 
 const Index = ({ env }: { env: Record<string, string> }) => {
   const links = RootStore.user.links;

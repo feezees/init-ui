@@ -43,6 +43,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             message.channel.send(m);
         }
     });
+    
     client.login(config.BOT_TOKEN);
 
     res.send('pong');

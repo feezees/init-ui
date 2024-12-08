@@ -46,7 +46,7 @@ export class AuthStore {
 
   async tryAuthByToken() {
     axios
-      .post(`${DOMEN}/api/loginBySessionToken`)
+      .put(`${DOMEN}/api/login`)
       .then((res) => {
         if (res.status !== 200) {
           this.loading = false;
@@ -89,7 +89,7 @@ export class AuthStore {
 
   async logout() {
     axios
-      .get("/api/logout")
+      .post(`${DOMEN}/api/login`)
       .catch((err) => console.log(err))
       .then((res) => {
         this.loading = false;
