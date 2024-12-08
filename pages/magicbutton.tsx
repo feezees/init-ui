@@ -4,8 +4,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 const sButton = "bg-red-500 w-40 h-10 rounded-lg";
 
 export default function () {
-    const [value, setValue] = useState<any>();
-    const ref = useRef<HTMLInputElement>(null);
+    const [value, setValue] = useState();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [categories, setCategories] = useState<string[]>([]);
     useLayoutEffect(() => {
@@ -14,22 +14,27 @@ export default function () {
 
     const handleClick = () => {
         const path = location.origin;
-        const url = new URL(path + '/api/loveka/getCategories');
+        const url = new URL(path + '/api/issue/lexica');
+        const s = inputRef?.current?.value.replaceAll(' ', '-') as string
+        console.log('#52 ', s)
 
-        if (!ref.current?.value) {
-            return;
-        }
+        url.searchParams.set('value', s);
+        axios.get(url.href).catch().then(res => {
 
-        url.searchParams.set('value', ref.current.value);
-        axios.get(url.href).catch((err) => setValue(err)).then(res => setValue(res?.data))
+            const src = res.data.images[0].src;
+            const q = src.split('/')
+            const w = q[q.length - 1];
+            const prefix = 'https://image.lexica.art/'
+            const [full, small] = [prefix + 'md/', prefix + 'sm/']
+
+            console.log('#52 ', full + w)
+        });
     }
 
     return (
-        <div>
-            {value && value.map((el: {srcSmall: string}) => <img className="h-[64px] w-[64px] border-2" src={el.srcSmall} />)}
-            {categories.length && categories.map((category, index) => <p key={index}>{category}</p>)}
-            <input type="text" ref={ref} defaultValue='cake' />
-            <button className={sButton} onClick={handleClick}>{JSON.stringify(value)}</button>
+        <div className="w-full h-screen flex justify-center items-center bg-slate-900">
+            <input type="text" defaultValue="cats" ref={inputRef} />
+            <button className={sButton} onClick={handleClick}>XD</button>
         </div>
     )
 }
