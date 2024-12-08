@@ -1,16 +1,19 @@
 import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { DOMEN } from "../settings";
+import { IDBRouteDto } from "../types/dto";
 type TCurrent = HTMLInputElement | null;
 
 export class AuthStore {
   RootStore: any;
+  user: any;
   constructor(root: any) {
     makeAutoObservable(this), (this.RootStore = root);
   }
 
   isAuth = false;
   loading = true;
+  links = [] as IDBRouteDto[];
 
   setLoading(value: boolean) {
     this.loading = value;
@@ -20,9 +23,30 @@ export class AuthStore {
     this.isAuth = value;
   }
 
+  async authByTg({ username, id }: { username: string; id: number }) {
+
+    axios.post(`${DOMEN}/api/login`, { authType: 'tg', username, id })
+      .then((res) => {
+        if (res.status !== 200) {
+          this.RootStore.user.tgUser = { username, id };
+          this.loading = false;
+          this.isAuth = false;
+        } else {
+          this.loading = false;
+          this.isAuth = true;
+
+          this.RootStore.user.links = res.data.links;
+        }
+      })
+      .catch((err) => {
+        this.loading = false;
+        this.isAuth = false;
+      });
+  }
+
   async tryAuthByToken() {
     axios
-      .post(`${DOMEN}/api/loginBySessionToken`)
+      .put(`${DOMEN}/api/login`)
       .then((res) => {
         if (res.status !== 200) {
           this.loading = false;
@@ -42,7 +66,6 @@ export class AuthStore {
 
   async submitLogin(login: string | undefined, password: string | undefined) {
     if (!login || !password) return;
-    const PORT = this.RootStore.dev ? `3000` : `3001`;
 
     axios
       .post(`${DOMEN}/api/login`, {
@@ -65,7 +88,7 @@ export class AuthStore {
 
   async logout() {
     axios
-      .get("/api/logout")
+      .delete(`${DOMEN}/api/login`)
       .catch((err) => console.log(err))
       .then((res) => {
         this.loading = false;

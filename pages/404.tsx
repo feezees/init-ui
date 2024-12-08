@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import React, { ReactNode } from "react";
 
 export default function () {
   const router = useRouter();
 
-  console.log('@router', router.asPath);
   return (
     <div className="h-screen w-screen bg-slate-900">
+      zxc
+
       <div className=" absolute left-1/2  -translate-x-1/2 top-1/2 transform -translate-y-1/2 flex flex-col gap-8 z-50  text-[10rem] text-slate-300 font-bold ">
         <button onClick={() => router.back()}>GO BACK</button>
       </div>

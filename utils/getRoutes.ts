@@ -1,3 +1,4 @@
+import { heading } from "discord.js";
 import { IDBRouteDto } from "../types/dto";
 
 export let defalutLinks = [
@@ -8,7 +9,38 @@ export let defalutLinks = [
     },
 ] as IDBRouteDto[];
 
-export const getRoutes = (role: 'admin' | 'moder' | 'driver') => {
+export const getRoutes = (role: 'admin' | 'moder' | 'driver' | 'tg') => {
+    if (role === 'tg') {
+        return [
+            ...defalutLinks,
+            {
+                href: '/issue/ws',
+                heading: '/issue/ws',
+                description: ''
+            },
+            {
+                href: '/loveka',
+                heading: '/loveka',
+                description: ''
+            },
+            {
+                href: '/magicbutton',
+                heading: '/magicbutton',
+                description: '' 
+            },
+            {
+                href: '/increment',
+                heading: 'increment',
+                description: '',
+            },
+            {
+                href: '/increment/top',
+                heading: 'increment top',
+                description: '',
+            }
+        ]
+    }
+
     if (role === 'admin') {
         return [
             ...defalutLinks,

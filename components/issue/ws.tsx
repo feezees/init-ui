@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
+import { Socket } from 'socket.io';
 import io from 'socket.io-client';
 
-let socket;
+let socket:any;
 
 const Chat = () => {
     const [counter, setCounter] = useState<number>(0);
@@ -11,7 +12,7 @@ const Chat = () => {
         axios.get('/api/ws').catch(err => console.log(err))
         socket = io();
 
-        socket.on('message', (message) => {
+        socket.on('message', (message: SetStateAction<number>) => {
             setCounter(message)
         });
 

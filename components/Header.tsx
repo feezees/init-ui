@@ -5,11 +5,16 @@ import { RootStore } from "../store/RootStore"
 
 export const sLink = ` text-twitchgray hover:text-twitchhovergrey active:text-twitchpink hover`
 
+const homeLink = {
+    href: "/",
+    heading: "home"
+}
+
 const Header = () => {
     return (
-        <div className="py-2 flex justify-between items-center">
-            <div className="flex gap-4">
-                {RootStore.user.links.map(el => <Link href={el.href} key={el.href} className={sLink}>{el.heading}</Link>)}
+        <div className="flex justify-between items-center">
+            <div className="flex ">
+                <Link href={homeLink.href} className={sLink}>{homeLink.heading}</Link>
             </div>
 
             <button className={sButton} onClick={() => RootStore.auth.logout()}>

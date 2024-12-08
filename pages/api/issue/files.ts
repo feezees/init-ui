@@ -4,7 +4,7 @@ const fs = require('fs');
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const filePath = './components';
 
-    fs.stat(filePath, (err, stats) => {
+    fs.stat(filePath, (err: any, stats: any) => {
         if (err) {
             console.error(err);
             return;

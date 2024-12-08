@@ -2,6 +2,8 @@ import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { IDBRouteDto } from "../types/dto";
 
+type TgUser = { username: string, id: number };
+
 export class UserStore {
     RootStore: any;
     constructor(root: any) {
@@ -12,4 +14,7 @@ export class UserStore {
 
     logout() {
     }
+
+    tgUser: TgUser | undefined;
+    
 }
