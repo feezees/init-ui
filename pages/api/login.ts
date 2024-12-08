@@ -1,16 +1,16 @@
 import { faker } from "@faker-js/faker";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { IDbTokenDto, IDbUserDto } from "../../types/dto";
-import { getRoutes } from "../../utils/getRoutes";
 import { parsedFile, saveFile } from "../../utils/file";
+import { getRoutes } from "../../utils/getRoutes";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const method = req.method;
 
   if (method === "POST") {
     const authType = req.body.authType;
-
-    if (authType !== "tg") {
+    console.log('#52 ', authType)
+    if (authType === "tg") {
       if (req.body?.username && req.body?.id) {
         const users = parsedFile("./db/tgusers.json");
         console.log('#users', users, req.body);

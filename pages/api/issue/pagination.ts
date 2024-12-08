@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { parsedFile } from "../../../utils/file";
 import { faker } from "@faker-js/faker";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
