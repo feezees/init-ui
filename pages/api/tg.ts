@@ -7,7 +7,6 @@ import { tg } from "../../settings";
 const { token, webAppUrl } = tg as Record<string, string>;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    console.log('#52 ', process.env.TG_BOT_TOKEN)
     const bot = new TelegramBot(token, { polling: true });
     bot.on("message", async (msg: any, match: any) => {
 

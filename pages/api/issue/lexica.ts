@@ -7,7 +7,6 @@ import { readFile } from "fs";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const query = req.query?.value as string;
     const files = await fs.readdir('./db/lexica');
-    console.log('#52 2', query, files);
 
     try {
         if (query.match('/')) {
@@ -15,11 +14,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         const list = files.map(el => el.split('.json')[0]);
         const has = list.includes(query);
-        console.log('#52 has', has);
 
         if (!has) {
             const response = await axios.get(`https://lexica.art/api/v1/search?q=${query}`);
-            console.log('#52 ', response.data);
             saveFile(`./db/lexica/${query}.json`, response.data);
             res.send(response.data);
             return
@@ -28,9 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.send(f);
             return;
         }
-        // saveFile(`./db/lexica/${query}.json`, data);
     } catch (err) {
-        console.log('#52 err')
         res.send('lexica err');
         return;
     }

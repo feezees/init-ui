@@ -53,6 +53,7 @@ export default function LoginPage() {
                     type="text"
                     placeholder="login"
                     ref={loginRef}
+                    defaultValue='admin'
                     className={clsx(customStyle, textStyle, outlineStyle, borderStyle, "p-2")}
                 />
                 <div className="flex relative">
@@ -60,6 +61,7 @@ export default function LoginPage() {
                         type={inputPasswordType}
                         placeholder={inputPasswordPlaceholder}
                         ref={passwordRef}
+                        defaultValue='zxc!%)0'
                         className={clsx(customStyle, textStyle, outlineStyle, borderStyle, " w-full p-2 border-slate-500")}
                     />
                     <button

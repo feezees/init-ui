@@ -16,7 +16,6 @@ export default function () {
         const path = location.origin;
         const url = new URL(path + '/api/issue/lexica');
         const s = inputRef?.current?.value.replaceAll(' ', '-') as string
-        console.log('#52 ', s)
 
         url.searchParams.set('value', s);
         axios.get(url.href).catch().then(res => {
@@ -26,8 +25,6 @@ export default function () {
             const w = q[q.length - 1];
             const prefix = 'https://image.lexica.art/'
             const [full, small] = [prefix + 'md/', prefix + 'sm/']
-
-            console.log('#52 ', full + w)
         });
     }
 

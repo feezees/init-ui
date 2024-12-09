@@ -5,11 +5,12 @@ import { parsedFile, saveFile } from "../../utils/file";
 import { getRoutes } from "../../utils/getRoutes";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+
+
   const method = req.method;
 
   if (method === "POST") {
     const authType = req.body.authType;
-    console.log('#52 ', authType)
     if (authType === "tg") {
       if (req.body?.username && req.body?.id) {
         const users = parsedFile("./db/tgusers.json");
@@ -68,7 +69,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const sessionTokenValid = tokens.find((t: IDbTokenDto) => t.sessionToken === sessionToken);
 
     if (!sessionTokenValid) {
-      res.send("wrong token");
+      // wrong token
+      res.status(401).send('wrong token');
       return;
     }
 
